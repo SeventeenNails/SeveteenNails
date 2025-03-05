@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider Nails Factory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .service-item img,
+.image-box img,
+.objectives-image img {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.service-item:hover img,
+.image-box:hover img,
+.objectives-image:hover img {
+    transform: scale(1.1);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto hover en botones */
+.btn, .reserve-btn {
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.btn:hover, .reserve-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
+}
+
+/* Animación de entrada para secciones */
+.content-container, .objectives-section, .services-container {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Menú Responsive con animación */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    max-height: 350px;
+    overflow: auto;
+    z-index: 100;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Muestra el menú cuando tiene la clase active */
+.mobile-menu.active {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.mobile-menu.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Hover en redes sociales */
+.icon {
+    transition: transform 0.3s ease-in-out;
+}
+
+.icon:hover {
+    transform: scale(1.3) rotate(10deg);
+}
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 70vh;
+            display: block;
+            object-fit: cover;
+        }
+
+        .logo-container {
+             position: absolute;
+           top: 10px;
+               left: 20px;
+         }
+
+        .logo-container img {
+            height: 150px;
+        }
+
+        .menu {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px;
+        }
+
+        .hashtag {
+            position: absolute;
+            top: 65px;
+            left: 93%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+        footer {
+    background: #000;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+/* --- MENÚ RESPONSIVE --- */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Inicialmente fuera de la pantalla */
+    width: 250px;
+    height: 23vh;
+    background: rgba(0, 0, 0, 0.95);
+    padding-top: 60px; /* Espacio para que los botones no queden pegados */
+    text-align: center;
+    transition: right 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0;
+    z-index: 1000;
+}
+
+/* Clases para mostrar el menú */
+.mobile-menu.show {
+    right: 0;
+    opacity: 1;
+}
+
+/* Botón del menú */
+.menu-icon {
+    display: block;
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1001;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Efecto hover en el icono */
+.menu-icon:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+/* Animación de entrada de los enlaces */
+.mobile-menu a {
+    display: block;
+    color: white;
+    font-size: 18px;
+    padding: 15px;
+    text-decoration: none;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Efecto hover en los enlaces */
+.mobile-menu a:hover {
+    color: #e1306c;
+    transform: scale(1.1);
+}
+
+/* Fondo desenfocado al abrir el menú */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 999;
+}
+
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.footer-container p {
+    font-size: 14px;
+    flex: 1;
+}
+
+.social-icons {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex: 1;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+
+/* Efecto hover: agrandar y brillo */
+.icon:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+}
+
+.reserve-btn {
+    background: #e1306c;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    flex: 1;
+    text-align: center;
+    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Brillo en hover */
+.reserve-btn:hover {
+    background: #ff478a;
+    box-shadow: 0 0 10px #ff478a;
+}
+        .location-container {
+    background: linear-gradient(to bottom, rgba(200, 200, 200, 0.7), rgba(245, 245, 245, 1));
+    color: black;
+    padding: 20px 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+opacity: 0.9;
+}
+
+        .text-box, .ob{
+            max-width: 40%; /* Reduce el ancho para mejorar la lectura */
+            background: rgba(200, 200, 200, 0.3);
+            padding: 25px;
+            border-radius: 12px;
+            font-size: 18px;
+            color: #333;
+            line-height: 1.8; /* Espaciado entre líneas para mejor legibilidad */
+            text-align: justify; /* Justifica el texto */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        .text-box h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .image-box, .objectives-image {
+            max-width: 45%;
+        }
+
+        .image-box img, .objectives-image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+
+/* Animación del título */
+.location-container h2 {
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    opacity: 0;
+    animation: fadeInUp 1s ease-in-out forwards;
+}
+/*servicios*/
+.services-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 50px 20px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+.services-section h2 {
+            font-size: 28px;
+            margin-bottom: 0px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+        }
+
+.service-item {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+}
+
+.service-item img {
+    width: 250px;
+    height: 250px;
+    border-radius: 30px;
+    object-fit: cover;
+}
+
+.service-item h3 {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.service-item p {
+    font-size: 16px;
+    color: #555;
+}
+/*objetivos*/
+.objectives-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 30px 60px;
+        }
+
+        .objectives-text {
+    max-width: 40%; /* Reduce el ancho para mejorar la lectura */
+    background: rgba(200, 200, 200, 0.3);
+    padding: 25px;
+    border-radius: 12px;
+    font-size: 18px;
+    color: #333;
+    line-height: 1.8; /* Espaciado entre líneas para mejor legibilidad */
+    text-align: justify; /* Justifica el texto */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+.objectives-text h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+        .objectives-image {
+            max-width: 40%;
+        }
+
+        .objectives-image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efecto en el subtítulo */
+.location-container p {
+    font-size: 18px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.location-container p:hover {
+    opacity: 1;
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste del mapa */
+iframe {
+    width: 90%;
+    max-width: 800px;
+    height: 500px;
+    border: 0;
+    margin-top: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efecto al pasar el mouse sobre el mapa */
+iframe:hover {
+    transform: scale(1.02);
+}
+
+.content-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    margin-top: -200px; /* Ajusta la posición general más arriba */
+}
+
+/* Estilos para el texto con fondo gris */
+
+
+/* Botón dentro del texto */
+.text-box .btn {
+    display: inline-block;
+    background: black;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+/* Imagen al lado derecho */
+.image-box {
+    max-width: 50%;
+    margin-top: -30px; /* Sube la imagen un poco */
+}
+
+.image-box img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+        /* Responsive Menu */
+        .menu-icon {
+            display: none;
+            position: absolute;
+            top: 35px;
+            right: 20px;
+            font-size: 26px;
+            color: white;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 5px;
+            z-index: 10;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            width: 200px;
+            max-height: 350px;
+            overflow: auto;
+            z-index: 10;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .mobile-menu a:last-child {
+            background: white;
+            color: black;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+    .menu {
+        display: none;
+    }
+    .mobile-menu {
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.mobile-menu.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+    .content-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .text-box {
+                max-width: 95%;
+                padding: 20px;
+                font-size: 16px;
+                line-height: 1.6;
+            }
+
+            .image-box {
+                max-width: 100%;
+                margin-top: 20px;
+            }
+    .menu-icon {
+        display: block;
+    }
+    .logo-container {
+        left: 0px;
+        top: 0px;
+    }
+    .logo-container img {
+            height: 120px;
+    }
+    
+    .reserve {
+        display: none; /* Oculta el botón de reserva en la versión de escritorio */
+    }
+    .hashtag {
+            position: absolute;
+            top: 360px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+    }
+    .content-container {
+        flex-direction: column;
+        text-align: center;
+        margin-top: -300px; /* Ajusta la posición en móvil */
+    }
+
+    .text-box, .image-box {
+        max-width: 90%;
+        margin-top: 10px; /* Ajusta la posición de los elementos en móvil */
+    }
+
+    .text-box {
+        padding: 15px; /* Reduce un poco el padding en móviles */
+    }
+    .location-container {
+    background: linear-gradient(to bottom, rgba(220, 220, 220, 0.7), rgba(245, 245, 245, 1));
+    color: black;
+    padding: 40px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    opacity: 0.95;
+}
+.objectives-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .objectives-text {
+        max-width: 95%;
+        padding: 20px;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .objectives-image {
+        max-width: 100%;
+        margin-top: 20px;
+    }
+
+    .objectives-image img {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .objectives-text h2 {
+        max-width: 95%;
+        padding: 20px;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .objectives-text .btn {
+        display: inline-block;
+        background: black;
+        color: white;
+        padding: 10px 15px;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+        margin-top: 15px;
+    }
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-icons {
+        margin: 10px 0;
+    }
+
+    .reserve-btn {
+        margin-top: 10px;
+    }
+
+/* Animación del título */
+.location-container h2 {
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    opacity: 0;
+    animation: fadeInUp 1s ease-in-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.services-container {
+    display: flex;
+    justify-content: center;
+    
+    gap: 40px;
+    padding: 50px 20px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+.services-section h2 {
+            font-size: 22px;
+            margin-bottom: 0px;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+        }
+
+.service-item {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 200px;
+}
+
+.service-item img {
+    width: 150px;
+    height: 150px;
+    border-radius: 30px;
+    object-fit: cover;
+}
+
+.service-item h3 {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.service-item p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Efecto en el subtítulo */
+.location-container p {
+    font-size: 18px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.location-container p:hover {
+    opacity: 1;
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste del mapa */
+iframe {
+    width: 90%;
+    max-width: 800px;
+    height: 500px;
+    border: 0;
+    margin-top: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efecto al pasar el mouse sobre el mapa */
+iframe:hover {
+    transform: scale(1.02);
+}
+ 
+}
+
+    /* Estilo para el botón en el centro del slider */
+    .mobile-reserve {
+    display: block;
+    position: absolute;
+    top: 34%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    color: white;
+    font-weight: bold;
+    padding: 15px 25px;
+    border: 2px solid white; /* Borde blanco */
+    border-radius: 50px; /* Bordes redondeados */
+    text-decoration: none;
+    font-size: 18px;
+    text-align: center;
+    backdrop-filter: blur(10px); /* Efecto de desenfoque en el fondo */
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2); /* Sombra suave */
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* Efecto hover para el botón */
+.mobile-reserve:hover {
+    background: rgba(255, 255, 255, 0.3); /* Un poco menos transparente al pasar el mouse */
+    transform: translate(-50%, -50%) scale(1.1); /* Efecto de agrandamiento */
+}
+
+
+    </style>
+</head>
+<body>
+    <div id="inicio" class="slider-container">
+        <div class="slider">
+            <div class="slide"><img src="SLIDER-NF6.webp" alt="Slide 1"></div>
+            <div class="slide"><img src="SLIDER-NF9.webp" alt="Slide 2"></div>
+        </div>
+    </div>
+        
+        <div class="logo-container">
+            <img src="logo_sofia-removebg-preview.png" alt="Nails Factory Logo">
+        </div>
+        
+        <div class="hashtag">#SEVENTEEN</div>
+        
+        <div class="menu">
+            <a href="#">INICIO</a>
+            <a href="#">UBICACION</a>
+            <a href="#">SERVICIOS</a>
+            <a href="#">QUIÉNES SOMOS</a>
+        </div>
+        
+        <a href="https://wa.me/123456789" class="mobile-reserve">PEDIR CITA AHORA</a>
+
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#inicio">INICIO</a>
+            <a href="#UBICACION">UBICACIÓN</a>
+            <a href="#servicios">SERVICIOS</a>
+            <a href="#objetivos">OBJETIVOS</a>
+            <a href="https://wa.me/123456789" target="_blank">PEDIR CITA AHORA</a>
+        </div>
+    </div>
+    <div class="content-container">
+        <!-- Texto con fondo gris -->
+        <div class="text-box">
+            <h2>Seventeen</h2>
+            <p>
+                ¿Buscas el mejor cuidado y seguridad para tus uñas? Descubre un espacio donde la higiene, calidad y confianza se combinan para ofrecerte una experiencia única. Seventeen garantiza el cumplimiento de estrictos protocolos de desinfección y bienestar.
+            </p>
+            <p>
+                Seventeen se destaca por el compromiso con la innovación y la excelencia, marcando la diferencia en el sector de la belleza. Aquí encontrarás un entorno seguro, moderno y relajante, diseñado para que disfrutes sin preocupaciones.
+            </p>
+            <p>
+                Si deseas un lugar donde realzar tu belleza con uñas impecables. Seventeen es tu mejor elección.
+            </p>
+            <a href="#" class="btn">SEVENTEEN</a>
+        </div>
+    
+        <!-- Imagen al lado derecho -->
+        <div class="image-box">
+            <img src="manicure.jpg" alt="Imagen de Nails Factory">
+        </div>
+    </div>
+    <section id="servicios" class="services-section">
+        <h2>Algunos servicios que ofrecemos:</h2>
+    <div class="services-container">
+        <div class="service-item">
+            <img src="esmalte en gel.jpg" alt="Uñas en gel">
+            <h3>En gel</h3>
+            <p>Estas uñas están hechas en gel, ideales para un acabado natural y duradero.</p>
+        </div>
+        <div class="service-item">
+            <img src="Unas-acrilicas-francesas.jpg" alt="Uñas acrílicas">
+            <h3>Acrílicas</h3>
+            <p>Las uñas acrílicas son perfectas para una mayor resistencia y diseño personalizado.</p>
+        </div>
+        <div class="service-item">
+            <img src="tradicional.jpg" alt="Uñas acrílicas">
+            <h3>Tradicional</h3>
+            <p>Esmalte de uñas de color sólido sobre la placa de las uñas
+            </p>
+        </div>
+        <div class="service-item">
+            <img src="rubber.jpg" alt="Rubber">
+            <h3>Rubber</h3>
+            <p>Base niveladora de uñas que se utiliza para fortalecer y proteger las uñas naturales
+            </p>
+        </div>
+    </div>
+    
+    <section id="UBICACION" class="location-container">
+        <h2>Nos encontramos en:</h2>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d949.8858986038359!2d-63.18922554411739!3d-17.76613164464361!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93f1e70044ebc76f%3A0xeb0b8c82181bdbef!2sseventeen.!5e0!3m2!1ses-419!2sbo!4v1739925705412!5m2!1ses-419!2sbo" width="200" height="100" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+    <section id="objetivos" class="objectives-section">
+
+        <div class="objectives-text">
+            <h2>Nuestros Objetivos</h2>
+            <p>En Seventeen, nos esforzamos por brindar un servicio de calidad excepcional, asegurando la satisfacción de cada cliente con uñas impecables y un ambiente relajante.</p>
+            <p>Nos comprometemos a utilizar productos de alta calidad y técnicas innovadoras que garanticen la salud y belleza de tus uñas.</p>
+            <p>Buscamos ser el centro de referencia en el cuidado de uñas, ofreciendo un entorno seguro, higiénico y de confianza para todos nuestros clientes.</p>
+        </div>
+        <div class="objectives-image">
+            <img src="a2715cf2-16c4-4624-a9d0-09a6bc2e5305.jpeg" alt="Objetivos de la empresa">
+        </div>
+    </section>
+    <footer>
+        <div class="footer-container">
+            <p>© 2025 Seventeen Nails Todos los derechos reservados.</p>
+    
+            <div class="social-icons">
+                <a href="https://www.instagram.com/" target="_blank">
+                    <img src="instagram-removebg-preview.png" alt="Instagram" class="icon">
+                </a>
+                <a href="https://www.tiktok.com/" target="_blank">
+                    <img src="png-transparent-tiktok-logo-thumbnail-removebg-preview.png" alt="TikTok" class="icon">
+                </a>
+            </div>
+    
+            <a href="https://wa.me/123456789" class="reserve-btn">Reserva tu cita ahora</a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.toggle("active");
+}
+
+// Cierra el menú cuando se hace clic en un enlace
+document.querySelectorAll(".mobile-menu a").forEach(item => {
+    item.addEventListener("click", function () {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.remove("active");
+    });
+});
+        let currentIndex = 0;
+        const slides = document.querySelectorAll(".slide");
+        const totalSlides = slides.length;
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateSlider();
+        }
+
+        function updateSlider() {
+            const slider = document.querySelector(".slider");
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+        setInterval(nextSlide, 3000);
+        document.addEventListener("DOMContentLoaded", function () {
+    const icons = document.querySelectorAll(".icon");
+
+    icons.forEach(icon => {
+        icon.addEventListener("mouseover", () => {
+            icon.style.transform = "rotate(10deg) scale(1.3)";
+        });
+
+        icon.addEventListener("mouseout", () => {
+            icon.style.transform = "rotate(0deg) scale(1)";
+        });
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    /* Efecto de scroll para revelar secciones */
+    function revealOnScroll() {
+        const elements = document.querySelectorAll(".content-container, .objectives-section, .services-container");
+        elements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 50) {
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0)";
+            }
+        });
+    }
+
+    /* Mostrar menú con animación */
+    function toggleMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("show");
+    }
+
+    /* Animación de hover en redes sociales */
+    const icons = document.querySelectorAll(".icon");
+    icons.forEach(icon => {
+        icon.addEventListener("mouseover", () => {
+            icon.style.transform = "rotate(10deg) scale(1.3)";
+        });
+
+        icon.addEventListener("mouseout", () => {
+            icon.style.transform = "rotate(0deg) scale(1)";
+        });
+    });
+
+    /* Llamadas a funciones */
+    window.addEventListener("scroll", revealOnScroll);
+    document.querySelector(".menu-icon").addEventListener("click", toggleMenu);
+    revealOnScroll(); // Ejecutar en carga inicial
+});
+
+    </script>
+</body>
+</html>
