@@ -569,7 +569,7 @@ iframe:hover {
     }
     .hashtag {
             position: absolute;
-            top: 340px;
+            top: 310px;
             left: 50%;
             transform: translateX(-50%);
             font-size: 20px;
@@ -579,7 +579,7 @@ iframe:hover {
     .content-container {
         flex-direction: column;
         text-align: center;
-        margin-top: -300px; /* Ajusta la posición en móvil */
+        margin-top: -250px; /* Ajusta la posición en móvil */
     }
 
     .text-box, .image-box {
@@ -678,28 +678,22 @@ iframe:hover {
 .services-container {
     display: flex;
     justify-content: center;
-    
     gap: 40px;
     padding: 50px 20px;
     flex-wrap: wrap;
     text-align: center;
 }
-.services-section h2 {
-            font-size: 22px;
-            margin-bottom: 0px;
-            font-weight: bold;
-            text-align: center;
-            width: 100%;
-        }
 
 .service-item {
     background: white;
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 200px;
+    width: calc(50% - 40px); /* Para que haya dos elementos por fila */
+    max-width: 250px; /* Limita el ancho máximo */
 }
 
+/* Ajusta el tamaño de la imagen dentro del servicio */
 .service-item img {
     width: 130px;
     height: 130px;
@@ -707,6 +701,7 @@ iframe:hover {
     object-fit: cover;
 }
 
+/* Ajusta los títulos y textos */
 .service-item h3 {
     font-size: 20px;
     margin: 10px 0;
